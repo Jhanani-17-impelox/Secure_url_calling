@@ -87,3 +87,5 @@ for i in range(3):
     
     # Print the response from the server
     print(f"[Client] Server Response #{i + 1}: {response.json()}")
+
+    #
