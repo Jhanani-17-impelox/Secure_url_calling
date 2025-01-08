@@ -1,7 +1,0 @@
-private_key.pem
-public_key.pem
-.history/
-salt/
-symmetric_cryptography_server.py
-symmetric_cryptography_client.py
-Readme_for_symmetric_cryptography.md
