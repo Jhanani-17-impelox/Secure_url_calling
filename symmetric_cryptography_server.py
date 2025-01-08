@@ -21,7 +21,11 @@ def decrypt_payload(encrypted_payload, salt):
     # Initialize AES cipher with the secret key and salt as IV
     cipher = AES.new(SECRET_KEY, AES.MODE_CBC, iv=salt)  # Salt used as IV
     decrypted_data = unpad(cipher.decrypt(encrypted_data), AES.block_size)  
-    
+
+    print(f"[Server] Encrypted MAC Address (Base64): {encrypted_payload}\n ")
+    print(f"[Server] Salt (Base64): {salt.hex()}\n ")
+    print(f"[Server] Decrypted MAC Address: {decrypted_data.decode('utf-8')}\n ") 
+
     return decrypted_data.decode('utf-8') #After decryption, the result is decoded back into a UTF-8 string (which should be the original MAC address).
 
 @app.route('/decrypt-mac', methods=['POST'])  #This decorator defines the API endpoint where the client sends the encrypted MAC address and the salt.
@@ -36,8 +40,10 @@ def handle_decrypted_mac():
             decrypted_mac = decrypt_payload(encrypted_mac, salt)
             return jsonify({'status': 'success', 'mac_address': decrypted_mac}), 200
         except Exception as e:
+            print("[Server] Error during decryption:", str(e))        
             return jsonify({'status': 'error', 'message': 'Decryption failed'}), 400
     else:
+        print("[Server] Error: Missing encrypted MAC or salt")
         return jsonify({'status': 'error', 'message': 'No encrypted MAC address or salt provided'}), 400
 
 if __name__ == '__main__':

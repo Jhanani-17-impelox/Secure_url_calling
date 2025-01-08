@@ -51,20 +51,39 @@ def encrypt_payload(data):
 # |-------------------------------------------------------------------------------------------------------------------------# |
 # | The encrypted MAC address and salt are both encoded using base64 so they can be safely transmitted as text over HTTP.   # |
 # |-------------------------------------------------------------------------------------------------------------------------# |
+    print(f"\n")
+    print(f"[Client] Original MAC Address: {data}\n")
+    print(f"[Client] Encrypted MAC Address (Base64): {encrypted_data_b64}")
+    print(f"[Client] Salt (Base64): {salt_b64}\n")
+
     return encrypted_data_b64, salt_b64
 
-# Get MAC address
+# # Get MAC address
 mac_address = get_mac_address()
 
-# Encrypt the MAC address
-encrypted_mac, salt = encrypt_payload(mac_address)
+                                                                                    # # Encrypt the MAC address
+                                                                                    # encrypted_mac, salt = encrypt_payload(mac_address)
 
-# API endpoint URL
-#A POST request is sent to the server at http://127.0.0.1:5000/decrypt-mac with the encrypted MAC address and the salt (both base64-encoded).
+# # API endpoint URL
+# A POST request is sent to the server at http://127.0.0.1:5000/decrypt-mac with the encrypted MAC address and the salt (both base64-encoded).
 
 url = 'http://127.0.0.1:5000/decrypt-mac' 
-# Send encrypted MAC address and salt to the API
-response = requests.post(url, json={"encrypted_mac": encrypted_mac, "salt": salt})
+# # Send encrypted MAC address and salt to the API
+# print ("Decrypted MAC Address:")
+# response = requests.post(url, json={"encrypted_mac": encrypted_mac, "salt": salt})
+# # Print the response from the server
+# print(response.json())
+# Send the MAC address three times with unique encryptions
 
-# Print the response from the server
-print(response.json())
+for i in range(3):
+    encrypted_mac, salt = encrypt_payload(mac_address)
+    
+    # Log the encrypted MAC and salt
+    print(f"[Client] Encrypted MAC #{i + 1}: {encrypted_mac}")
+    print(f"[Client] Salt #{i + 1}: {salt}")
+    
+    # Send encrypted MAC address and salt to the API
+    response = requests.post(url, json={"encrypted_mac": encrypted_mac, "salt": salt})
+    
+    # Print the response from the server
+    print(f"[Client] Server Response #{i + 1}: {response.json()}")
