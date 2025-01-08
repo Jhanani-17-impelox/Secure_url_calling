@@ -1,4 +1,3 @@
-```markdown
 # Asymmetric Cryptography for Encrypting and Decrypting MAC Addresses
 
 This code file demonstrates asymmetric cryptography using RSA to securely encrypt and decrypt MAC addresses. The implementation includes a client-server model where the client encrypts a MAC address with a random salt using the server's public key, and the server decrypts it using its private key.
@@ -45,7 +44,7 @@ This code file demonstrates asymmetric cryptography using RSA to securely encryp
 
 ### Step 1: Generate RSA Keys
 Run the following command to generate the RSA key pair:
-```bash
+```
 python private_key.py
 ```
 This will create two files:
@@ -54,14 +53,14 @@ This will create two files:
 
 ### Step 2: Start the Server
 Run the server script:
-```bash
+```
 python asymmetric_cryptography_server.py
 ```
 The server will start listening on `http://127.0.0.1:5000`.
 
 ### Step 3: Run the Client
 In another terminal, run the client script:
-```bash
+```
 python asymmetric_cryptography_client.py
 ```
 The client will:
